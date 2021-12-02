@@ -1,0 +1,8 @@
+[package]
+name = "Carbon"
+version = "0.0.1"
+edition = "2018"
+description = "Software suite for Arc/riscv64"
+repository = "https://github.com/Ardaku-Arc/Carbon"
+
+[dependencies]
