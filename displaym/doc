@@ -1,0 +1,3 @@
+Userspace display manager that handles graphics calls and stuff
+Basically the WM
+MAYBE ACTUALLY: just build those into the kernel. Its still quite modular if you do that

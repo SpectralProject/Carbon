@@ -1,0 +1,5 @@
+The terminal app for ArcOS
+The actual windowed app, e.g. Konsole and CMD. There is a built in kernel terminal called "KTerm" which is a very basic version of this
+Maybe its possible to use KTerm for some rendering or something or reuse some code
+IDK, I think it makes sense to render KTerm inside the window (vulkan) and tell the Display API to change the colors or something
+The display api then uses the display drivers, makes more complex use of it compared to KTerm.
