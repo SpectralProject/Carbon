@@ -1,1 +1,8 @@
-A 3D engineering software like FREECAD
+## Purpose
+An SDK/framework to build apps on ArcOS
+Uses NeutronWM libraries to create windows. Then uses its own libraries, images, animations, functions for everything else.
+Includes a cross platform IDE that allows one to build a native desktop app for ArcOS easily.
+Benefits of native apps:
+- speed
+- security, completely decoupled from the web and any web technologies, e.g. compared to a web app or electron app
+- robustness, the code is completely managed by you and only relies on the WM/kernel libraries. Wont randomly break like libraries on the web
