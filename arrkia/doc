@@ -144,3 +144,7 @@ Main() = {
 }
 
 ```
+
+## Arrkia Creator
+A QtCreator like IDE for Arrkia. Built using iced-rs.
+
