@@ -27,6 +27,12 @@ src/
 - builds for QuantOS native using ArcWM and Vulkano.
 - does not build for browsers. We shouldnt be using the same language for two different things. If you want to build for the web, use JS, flutter or kotlin.
 
+## Philosophy
+- make things quick and straightfoward to make. Create now, optimise later. No need for types, but you can specify types if you want, e.g. in vital components where things shouldnt fail and global variables
+- rely on underlying JIT and AOT compilers to validate and optimise the code
+- TDD, built in testing with `arrkia test`. Includes negative testing and property based testing and integration testing, out of the box
+- Common things, e.g. routing, components, animations etc. are built into Arrkia. More complex things and styled stuff are external libraries that can be installed locally and imported to your project files
+
 ## Boilerplate Code
 When you type `arrkia new <name>` you create an arrkia project in `<name>/`. It then creates the following structure:
 ```dir
@@ -54,26 +60,85 @@ Note the users.db is for storing user data. Uses a key-value store based on mong
 So you have something like:
 
 ```ffx
+// example.ffx file
 import arrkia.ffx
+import components.{Header, Footer}
 
-ComponentA() = {
+val x: int = 5 // global variables must be typed. Also great for language servers
+val __x: int = 6 // a variable private to this file
+
+// all components are public by default
+ComponentA({prop1, prop2}) = {
+    {name, setName} = initState("")
+
+    // a method is defined by the name and an equal-braces block
     handleClick() = {
-
+        // ternary operators have first class support
+        name == "Dixon" ? setName("Dixon") : ""
     }
 
+    // the component's view are defined by the return statement
     ret (
         <>
             <Heading>This is ComponentA</Heading>
             <Body>
-                <Box color="white" backgroundColor="black">
+                <Box color='white' backgroundColor='black'>
                     Hi I am in a Box
                 </Box>
 
-                <Flex>
+                {prop1}
 
+                <Flex flexDir='row'>
+                    This is a flexbox
                 </Flex>
 
+                <Motion animate={[{shrink: 0.25, time: 0.5}, {expand:0.25, time:0.15}]}>
+                    <Box>
+                        <Text>This will SHRINK then EXPAND</Text>
+                    </Box>
+                </Motion>
+
+                {prop2}
+
             </Body>
+        </>
+    )
+}
+
+// an _ underscore makes the component private to the module
+_ComponentB() = {
+    ret (
+        <>
+        </>
+    )
+}
+
+// __ underscores makes the component private to the file
+__ComponentC() = {
+    ret (
+        <>
+        </>
+    )
+}
+
+```
+
+When you create a new Arrkia project, your index.ffx looks like:
+```ffx
+// boilerplate index.ffx
+import arrkia.{ffx, Documentation}
+import components.{Header, Footer}
+import assets.visuals."Arrkia.gif" as ArrkiaSpinner
+
+Main() = {
+    ret (
+        <>
+            <Header>An Arrkia App</Header>
+            <Body>
+                <Motion src=ArrkiaSpinner/>
+                <Documentation/>
+            </Body>
+            <Footer/>
         </>
     )
 }
