@@ -14,7 +14,9 @@ struct UserspaceSettings {
     user_semantic_fs: SemanticFS,
 }
 
-// an app, representation of an entire packaged program (usually installed as a single executable with supporting assets)
+
+// usually to do with graphical interfaces like app docks/drawers. Packages are more to do with the backend view
+// an app, representation of a single program (usually installed as a single executable with supporting assets)
 // a single icon or animation as its thumbnail
 // can be searched in the search dock
 pub struct App {
@@ -46,3 +48,8 @@ impl Searcher {
         // get kernel to make db for you
     }
 }
+
+// LIBRARIES
+
+pub mod desktop;
+pub mod package;
