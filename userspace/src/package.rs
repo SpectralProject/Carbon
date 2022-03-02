@@ -149,3 +149,24 @@ impl PackageManager {
 // popular and featured rows
 // editor's choice
 struct Frontend;
+
+impl Frontend {
+    // get this week's top 100 apps
+    pub fn get_top_100_this_week(&self) {}
+
+    // get the front page like IOS
+    pub fn get_daily_store_front(&self) {}
+    pub fn display_installed(&self) {
+        // get installed packages from PackageManager.packages
+        // send to FFX
+    }
+}
+
+// -------
+// TESTS
+// -------
+
+#[test]
+fn test_package() {
+    let package = Package::new("hyperswine/umbral");
+}
