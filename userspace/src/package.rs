@@ -1,5 +1,7 @@
 // PACKAGE MANAGER
 
+use crate::App;
+
 // kinda like functional app managers/
 
 // SYMLINK Command => symlink <src> <dst>
@@ -10,13 +12,94 @@
 // NOTE: no '/usr' or '/local'
 struct Package {
     name: String,
+    exes: Vec<Executable>,
+    staticlibs: Vec<StaticLibrary>,
+    dynamiclibs: Vec<DynamicLibrary>,
+    apps: Vec<App>,
+}
+
+// needs to be .elf on neutron
+struct Executable {
+    path: String,
+}
+// should be .a, .lib or .o. Shouldnt be .o usually
+struct StaticLibrary {
+    path: String,
+}
+// usually .so
+struct DynamicLibrary {
+    path: String,
+}
+
+pub trait AppInstall {
+    fn install_app(&self);
 }
 
 impl Package {
     pub fn new(_name: &str) -> Self {
         Self {
             name: _name.to_string(),
+            exes: vec![],
+            staticlibs: vec![],
+            dynamiclibs: vec![],
+            apps: vec![],
         }
+    }
+    // a package should automatically link any libraries or executables to /bin and /lib
+    // by using the List<Executable> and List<StaticLibrary> interfaces
+    // The executable searcher searches /bin for executables
+    // But for apps, we search /app. Apps can be installed by packages too via the AppInstall interface
+    pub fn install_executables(&mut self) {
+        // assumes we have access to the main filesystem (default filesystem) at a root level
+        // which should be the case for standard users. But maybe not for guest containers
+
+        // executables.map(e -> ...)
+        self.exes.iter().for_each(|p| {
+            let command = "
+            #!/bin/reis
+            
+            symlink {p.path} /bin
+            ";
+
+            todo!("create a reis command with std::command")
+        });
+
+        self.staticlibs.iter().for_each(|p| {
+            let command = std::format!(
+                "
+            #!/bin/reis
+            
+            symlink {} /lib/static
+            ",
+                p.path
+            );
+        });
+
+        self.dynamiclibs.iter().for_each(|p| {
+            let command = std::format!(
+                "
+            #!/bin/reis
+            
+            symlink {} /lib/shared
+            ",
+                p.path
+            );
+        });
+    }
+}
+
+impl AppInstall for Package {
+    fn install_app(&self) {
+        self.apps.iter().for_each(|a| {
+            let command = std::format!(
+                "
+            #!/bin/reis
+            
+            symlink {} /lib/shared
+            ",
+                a.executable_path
+            );
+        });
     }
 }
 
@@ -44,7 +127,7 @@ impl PackageManager {
                 // need async fetch code
                 // TODO: check MD5 checksum after fetching from neutron-packages.io
                 let md5_checksum = ();
-                let official_checksum  = ();
+                let official_checksum = ();
                 assert_eq!(md5_checksum, official_checksum);
 
                 self.packages.push(package);
