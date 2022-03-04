@@ -8,3 +8,12 @@
 
 // FFX:
 // <Img svg={quanta::<icon_name>}/>
+
+/*
+
+return FFX`
+<Box>
+    <Heading>This is a heading</Heading>
+</Box>
+`
+*/
