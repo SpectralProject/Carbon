@@ -14,7 +14,6 @@ struct UserspaceSettings {
     user_semantic_fs: SemanticFS,
 }
 
-
 // usually to do with graphical interfaces like app docks/drawers. Packages are more to do with the backend view
 // an app, representation of a single program (usually installed as a single executable with supporting assets)
 // a single icon or animation as its thumbnail
@@ -52,4 +51,5 @@ impl Searcher {
 // LIBRARIES
 
 pub mod desktop;
+pub mod icons;
 pub mod package;
